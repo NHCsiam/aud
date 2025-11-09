@@ -199,17 +199,31 @@ function addInteractiveEffects() {
     // Enhanced hover effects removed (no message cards)
 }
 
-// Enhanced candle flame effect
+// Enhanced candle flame effect - More realistic
 function enhanceCandleFlame() {
     const candleFlames = document.querySelectorAll('.fuego');
+    const candle = document.querySelector('.velas');
     
+    // Add dynamic brightness variation to flames
     candleFlames.forEach((flame, index) => {
-        // Add periodic brightness variation
+        // More frequent and varied brightness changes for realism
         setInterval(() => {
-            const brightness = Math.random() * 0.3 + 0.7;
-            flame.style.filter = `brightness(${brightness})`;
-        }, 100 + index * 50);
+            const brightness = Math.random() * 0.4 + 0.8; // 0.8 to 1.2
+            const saturation = Math.random() * 0.2 + 0.9; // 0.9 to 1.1
+            flame.style.filter = `brightness(${brightness}) saturate(${saturation})`;
+        }, 80 + index * 30); // Faster updates for more dynamic effect
     });
+    
+    // Add subtle shadow variation to candle stick for more realism
+    if (candle) {
+        setInterval(() => {
+            const shadowIntensity = Math.random() * 0.1 + 0.15;
+            candle.style.boxShadow = `
+                inset 0 0 2px rgba(0, 0, 0, ${shadowIntensity}),
+                0 1px 2px rgba(0, 0, 0, ${shadowIntensity + 0.1})
+            `;
+        }, 200);
+    }
 }
 
 // Position candle correctly relative to cake SVG
@@ -222,15 +236,16 @@ function positionCandle() {
         const cakeRect = cake.getBoundingClientRect();
         const containerRect = cakeContainer.getBoundingClientRect();
         
-        // Candle position in SVG viewBox: x=97.5, y=380
+        // Candle position in SVG viewBox: x=97.5 (center of cake)
+        // The cake's top surface is at approximately y=427.569 (from the final animation state)
+        // But we need to position it so the candle BOTTOM sits on the cake top
         // SVG viewBox: 0 0 200 500
-        // SVG actual size: 200px × 500px
         const candleX = 97.5; // In viewBox coordinates (center is 100)
-        const candleY = 380;  // In viewBox coordinates
+        const cakeTopY = 427.569;  // Top of the cake surface
         
         // Calculate relative position within SVG (0-1 range)
         const relX = candleX / 200; // 0.4875 (48.75% from left)
-        const relY = candleY / 500; // 0.76 (76% from top)
+        const relY = cakeTopY / 500; // 0.855 (85.5% from top)
         
         // Get actual SVG dimensions
         const svgActualWidth = cakeRect.width;
@@ -238,14 +253,19 @@ function positionCandle() {
         
         // Calculate pixel offset from SVG top-left
         const candleXOffset = relX * svgActualWidth; // Pixels from left of SVG
-        const candleYOffset = relY * svgActualHeight; // Pixels from top of SVG
+        const cakeTopYOffset = relY * svgActualHeight; // Pixels from top of SVG to cake top
         
         // Calculate position relative to container
         const svgTopRelativeToContainer = cakeRect.top - containerRect.top;
         const svgLeftRelativeToContainer = cakeRect.left - containerRect.left;
         
-        // Position candle container
-        const candleTop = svgTopRelativeToContainer + candleYOffset;
+        // Position candle container so its BOTTOM sits on the cake top
+        // The candle height is 35px, so we position it 35px above the cake top
+        const candleHeight = 35; // Height of the candle stick
+        // Adjust to ensure candle sits ON TOP of cake (not sticking out)
+        // If candle is sticking out, we need to move it down slightly
+        const adjustment = -2; // Negative adjustment to move candle down onto cake surface
+        const candleTop = svgTopRelativeToContainer + cakeTopYOffset - candleHeight + adjustment;
         const candleLeft = svgLeftRelativeToContainer + candleXOffset - 2.5; // -2.5 to center 5px candle
         
         candleContainer.style.top = `${candleTop}px`;

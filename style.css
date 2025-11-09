@@ -253,7 +253,7 @@ body.loading {
     position: absolute;
     width: 5px;
     height: 35px;
-    z-index: 10;
+    z-index: -1; /* Behind the cake */
     pointer-events: none;
     /* Position will be calculated dynamically by JavaScript */
 }
@@ -263,11 +263,39 @@ body.loading {
     opacity: 0;
 }
 
-/* Candle stick for overlay */
+/* Candle stick for overlay - More realistic */
 .cake-container .velas {
     position: absolute;
-    background: #ffffff;
+    background: linear-gradient(to bottom, 
+        #f5f5f5 0%, 
+        #ffffff 20%, 
+        #fafafa 50%, 
+        #ffffff 80%, 
+        #f0f0f0 100%);
     border-radius: 2.5px;
+    box-shadow: 
+        inset 0 0 2px rgba(0, 0, 0, 0.1),
+        0 1px 2px rgba(0, 0, 0, 0.2);
+    /* Add subtle texture */
+    background-image: 
+        repeating-linear-gradient(
+            90deg,
+            transparent,
+            transparent 1px,
+            rgba(255, 255, 255, 0.3) 1px,
+            rgba(255, 255, 255, 0.3) 2px
+        );
+    /* Slight variation in width for realism */
+    animation: candleSway 4s ease-in-out infinite;
+}
+
+@keyframes candleSway {
+    0%, 100% {
+        transform: translateX(0) scaleX(1);
+    }
+    50% {
+        transform: translateX(0.3px) scaleX(1.02);
+    }
 }
 
 @keyframes candleAppear {
@@ -285,7 +313,7 @@ body.loading {
     border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
     width: 8px;
     height: 20px;
-    z-index: 11;
+    z-index: 100; /* Keep flame visible above cake */
     opacity: 0;
     animation: fuegoAppear 0.3s 6.5s forwards;
 }
@@ -343,6 +371,69 @@ body.loading {
     75% {
         transform: translateX(-50%) translateY(-2px) scale(1.05) rotate(1deg);
         opacity: 0.95;
+    }
+}
+
+/* Add wax drip effect */
+.velas-container::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 3px;
+    height: 4px;
+    background: linear-gradient(to bottom, 
+        rgba(255, 255, 255, 0.9) 0%, 
+        rgba(255, 250, 240, 0.8) 50%, 
+        rgba(255, 245, 230, 0.6) 100%);
+    border-radius: 0 0 2px 2px;
+    opacity: 0;
+    animation: waxDrip 8s 7s infinite;
+}
+
+@keyframes waxDrip {
+    0%, 90% {
+        opacity: 0;
+        height: 4px;
+    }
+    5%, 85% {
+        opacity: 0.6;
+        height: 5px;
+    }
+    10%, 80% {
+        opacity: 0.4;
+        height: 6px;
+    }
+}
+
+/* Add glow effect around candle base */
+.velas-container::before {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 12px;
+    height: 8px;
+    background: radial-gradient(ellipse, 
+        rgba(255, 235, 59, 0.3) 0%, 
+        rgba(255, 152, 0, 0.2) 40%, 
+        transparent 70%);
+    border-radius: 50%;
+    opacity: 0;
+    animation: baseGlow 2s 6.8s infinite;
+    z-index: -1;
+}
+
+@keyframes baseGlow {
+    0%, 100% {
+        opacity: 0.4;
+        transform: translateX(-50%) scale(1);
+    }
+    50% {
+        opacity: 0.6;
+        transform: translateX(-50%) scale(1.2);
     }
 }
 
