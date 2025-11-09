@@ -83,7 +83,7 @@ function initScrollAnimations() {
         gsap.registerPlugin(ScrollTrigger);
         
         // Animate cards on scroll
-        gsap.utils.toArray('.message-card, .wish-card, .photo-placeholder').forEach((card, index) => {
+        gsap.utils.toArray('.wish-card-flip, .photo-card-flip').forEach((card, index) => {
             gsap.from(card, {
                 scrollTrigger: {
                     trigger: card,
@@ -104,7 +104,7 @@ function addInteractiveEffects() {
     if (typeof gsap === 'undefined') return;
     
     // Enhanced smooth scroll animations for sections (Framer-like) - Fixed to show content
-    const sections = document.querySelectorAll('.message-section, .memories-section, .wishes-section, .secret-section');
+    const sections = document.querySelectorAll('.memories-section, .wishes-section, .secret-section');
     sections.forEach((section, index) => {
         // Ensure sections are visible
         gsap.set(section, { opacity: 1, visibility: 'visible' });
@@ -125,7 +125,7 @@ function addInteractiveEffects() {
     });
     
     // Enhanced card animations with stagger effect - Fixed to show content
-    const cards = document.querySelectorAll('.message-card, .wish-card-flip, .photo-card-flip');
+    const cards = document.querySelectorAll('.wish-card-flip, .photo-card-flip');
     cards.forEach((card, index) => {
         // Ensure content is visible first - CRITICAL
         gsap.set(card, { 
@@ -196,33 +196,7 @@ function addInteractiveEffects() {
         });
     });
     
-    // Enhanced hover effects for message cards
-    const otherCards = document.querySelectorAll('.message-card');
-    otherCards.forEach((card, index) => {
-        card.style.setProperty('--i', index);
-        
-        card.addEventListener('mouseenter', function() {
-            if (typeof gsap !== 'undefined') {
-                gsap.to(this, {
-                    scale: 1.05,
-                    y: -5,
-                    duration: 0.3,
-                    ease: 'power2.out'
-                });
-            }
-        });
-        
-        card.addEventListener('mouseleave', function() {
-            if (typeof gsap !== 'undefined') {
-                gsap.to(this, {
-                    scale: 1,
-                    y: 0,
-                    duration: 0.3,
-                    ease: 'power2.out'
-                });
-            }
-        });
-    });
+    // Enhanced hover effects removed (no message cards)
 }
 
 // Enhanced candle flame effect

@@ -393,29 +393,6 @@ body.loading {
     }
 }
 
-/* Message Section */
-.message-section {
-    padding: 5rem 0;
-    background: linear-gradient(180deg, #0a0a0a 0%, #1a1a2e 100%);
-    position: relative;
-    z-index: 1;
-}
-
-.message-card {
-    background: rgba(26, 26, 46, 0.8);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 192, 203, 0.3);
-    padding: 3rem;
-    border-radius: 20px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 192, 203, 0.2);
-    max-width: 800px;
-    margin: 0 auto;
-    text-align: center;
-    animation: slideUp 0.8s ease-out;
-    opacity: 1 !important;
-    visibility: visible !important;
-}
-
 .section-title {
     font-family: 'Dancing Script', cursive;
     font-size: 3rem;
@@ -423,23 +400,6 @@ body.loading {
     margin-bottom: 2rem;
     font-weight: 700;
     text-shadow: 0 0 20px rgba(255, 182, 193, 0.6);
-}
-
-.message-text {
-    font-size: 1.2rem;
-    line-height: 1.8;
-    color: #e0e0e0;
-    margin-bottom: 1.5rem;
-    text-align: left;
-}
-
-.signature {
-    font-family: 'Dancing Script', cursive;
-    font-size: 1.8rem;
-    color: #ffb6c1;
-    margin-top: 2rem;
-    text-align: right;
-    text-shadow: 0 0 15px rgba(255, 182, 193, 0.5);
 }
 
 /* Memories Section */
@@ -1078,7 +1038,43 @@ body.loading {
 }
 
 /* Responsive Design */
+
+/* Large Tablets and Small Desktops */
+@media (max-width: 1024px) {
+    .container {
+        padding: 0 1.5rem;
+    }
+    
+    .hero-content {
+        padding: 2rem 1rem;
+    }
+    
+    .main-title {
+        font-size: 3rem;
+    }
+    
+    .name-title {
+        font-size: 2rem;
+    }
+    
+    .photo-grid,
+    .wishes-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+    
+    .photo-card-flip,
+    .wish-card-flip {
+        height: 350px;
+    }
+}
+
+/* Tablets */
 @media (max-width: 768px) {
+    .container {
+        padding: 0 1.5rem;
+    }
+    
     .main-title {
         font-size: 2.5rem;
     }
@@ -1091,17 +1087,372 @@ body.loading {
         font-size: 2rem;
     }
     
-    .message-card {
-        padding: 2rem;
+    .hero-section {
+        padding: 3rem 0;
+        min-height: 80vh;
     }
     
-    .photo-grid,
-    .wishes-grid {
-        grid-template-columns: 1fr;
+    .hero-content {
+        padding: 1.5rem 1rem;
+    }
+    
+    .cake-container {
+        margin-bottom: 2rem;
     }
     
     #cake {
         width: 150px;
         height: 375px;
+    }
+    
+    .photo-grid,
+    .wishes-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .photo-card-flip {
+        height: 400px;
+    }
+    
+    .wish-card-flip {
+        height: 300px;
+    }
+    
+    .photo-card-front,
+    .photo-card-back,
+    .wish-card-front,
+    .wish-card-back {
+        padding: 2rem 1.5rem;
+    }
+    
+    .photo-icon {
+        font-size: 3.5rem;
+    }
+    
+    .photo-title {
+        font-size: 1.8rem;
+    }
+    
+    .photo-description {
+        font-size: 0.95rem;
+    }
+    
+    .wish-icon {
+        font-size: 2.5rem;
+    }
+    
+    .wish-card-front h3 {
+        font-size: 1.6rem;
+    }
+    
+    .memories-section,
+    .wishes-section {
+        padding: 3rem 0;
+    }
+    
+    .secret-section {
+        padding: 3rem 0;
+        min-height: 50vh;
+    }
+    
+    .secret-container {
+        padding: 0 1.5rem;
+    }
+    
+    .secret-lock-screen,
+    .secret-content {
+        padding: 2rem 1.5rem;
+    }
+    
+    .secret-title {
+        font-size: 2rem;
+    }
+    
+    .password-input,
+    .password-submit-btn {
+        font-size: 1rem;
+        padding: 0.9rem 1.5rem;
+    }
+    
+    .loading-title {
+        font-size: 2rem;
+    }
+    
+    .loading-cake {
+        font-size: 4rem;
+    }
+    
+    .loading-bar-container {
+        width: 250px;
+    }
+    
+    .footer {
+        padding: 2rem 0;
+    }
+    
+    .footer-text {
+        font-size: 1.3rem;
+    }
+}
+
+/* Mobile Devices */
+@media (max-width: 480px) {
+    .container {
+        padding: 0 1rem;
+    }
+    
+    .main-title {
+        font-size: 2rem;
+    }
+    
+    .name-title {
+        font-size: 1.5rem;
+    }
+    
+    .section-title {
+        font-size: 1.8rem;
+        margin-bottom: 2rem;
+    }
+    
+    .hero-section {
+        padding: 2rem 0;
+        min-height: 70vh;
+    }
+    
+    .hero-content {
+        padding: 1rem 0.5rem;
+    }
+    
+    .cake-container {
+        margin-bottom: 1.5rem;
+    }
+    
+    #cake {
+        width: 120px;
+        height: 300px;
+    }
+    
+    .photo-grid,
+    .wishes-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .photo-card-flip {
+        height: 350px;
+    }
+    
+    .wish-card-flip {
+        height: 280px;
+    }
+    
+    .photo-card-front,
+    .photo-card-back,
+    .wish-card-front,
+    .wish-card-back {
+        padding: 1.5rem 1rem;
+    }
+    
+    .photo-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+    
+    .photo-title {
+        font-size: 1.6rem;
+        margin-bottom: 0.8rem;
+    }
+    
+    .photo-description {
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+        line-height: 1.5;
+    }
+    
+    .photo-date {
+        font-size: 1rem;
+    }
+    
+    .flip-hint {
+        font-size: 0.75rem;
+        margin-top: 0.8rem;
+    }
+    
+    .wish-icon {
+        font-size: 2rem;
+        margin-bottom: 0.8rem;
+    }
+    
+    .wish-card-front h3 {
+        font-size: 1.4rem;
+        margin-bottom: 0.8rem;
+    }
+    
+    .wish-card-front p {
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .photo-image-placeholder .image-icon,
+    .wish-image-placeholder .image-icon {
+        font-size: 2.5rem;
+    }
+    
+    .photo-image-placeholder p,
+    .wish-image-placeholder p {
+        font-size: 0.85rem;
+    }
+    
+    .memories-section,
+    .wishes-section {
+        padding: 2.5rem 0;
+    }
+    
+    .secret-section {
+        padding: 2.5rem 0;
+        min-height: 50vh;
+    }
+    
+    .secret-container {
+        padding: 0 1rem;
+    }
+    
+    .secret-lock-screen,
+    .secret-content {
+        padding: 1.5rem 1rem;
+    }
+    
+    .lock-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+    
+    .secret-title {
+        font-size: 1.8rem;
+    }
+    
+    .secret-subtitle {
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .password-input-container {
+        gap: 0.8rem;
+    }
+    
+    .password-input,
+    .password-submit-btn {
+        font-size: 0.95rem;
+        padding: 0.8rem 1.2rem;
+    }
+    
+    .secret-content-title {
+        font-size: 1.8rem;
+    }
+    
+    .secret-content-body {
+        font-size: 1rem;
+    }
+    
+    .lock-button {
+        padding: 0.7rem 1.5rem;
+        font-size: 0.9rem;
+    }
+    
+    .loading-title {
+        font-size: 1.8rem;
+    }
+    
+    .loading-cake {
+        font-size: 3.5rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .loading-bar-container {
+        width: 200px;
+    }
+    
+    .loading-subtitle {
+        font-size: 1rem;
+    }
+    
+    .footer {
+        padding: 1.5rem 0;
+    }
+    
+    .footer-text {
+        font-size: 1.2rem;
+    }
+    
+    .footer-date {
+        font-size: 0.85rem;
+    }
+}
+
+/* Extra Small Mobile Devices */
+@media (max-width: 360px) {
+    .main-title {
+        font-size: 1.8rem;
+    }
+    
+    .name-title {
+        font-size: 1.3rem;
+    }
+    
+    .section-title {
+        font-size: 1.6rem;
+    }
+    
+    #cake {
+        width: 100px;
+        height: 250px;
+    }
+    
+    .photo-card-flip {
+        height: 320px;
+    }
+    
+    .wish-card-flip {
+        height: 260px;
+    }
+    
+    .photo-card-front,
+    .photo-card-back,
+    .wish-card-front,
+    .wish-card-back {
+        padding: 1.2rem 0.8rem;
+    }
+    
+    .photo-icon {
+        font-size: 2.5rem;
+    }
+    
+    .photo-title {
+        font-size: 1.4rem;
+    }
+    
+    .photo-description {
+        font-size: 0.85rem;
+    }
+    
+    .wish-icon {
+        font-size: 1.8rem;
+    }
+    
+    .wish-card-front h3 {
+        font-size: 1.2rem;
+    }
+    
+    .secret-title {
+        font-size: 1.6rem;
+    }
+    
+    .loading-title {
+        font-size: 1.6rem;
+    }
+    
+    .loading-cake {
+        font-size: 3rem;
     }
 }
