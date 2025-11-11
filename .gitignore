@@ -3,8 +3,7 @@ dist/
 build/
 
 # Ignore personal media (kept locally)
-img/**
-!img/.keep
+# (Removed for private repo so images/videos are included)
 
 # OS/editor noise
 .DS_Store
