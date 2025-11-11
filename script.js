@@ -177,13 +177,69 @@ function addInteractiveEffects() {
         }
     });
     
-    // Flip card functionality for wish cards
+    // Flip card functionality for wish cards + video autoplay on flip
     const wishFlipCards = document.querySelectorAll('.wish-card-flip');
     wishFlipCards.forEach((card) => {
+        // Prevent clicks on video/controls from flipping the card
+        const video = card.querySelector('video[data-wish-video]');
+        if (video) {
+            // Flip back helper when video ends
+            video.addEventListener('ended', () => {
+                card.classList.remove('flipped');
+                try {
+                    video.pause();
+                    video.currentTime = 0;
+                } catch (_) {}
+            });
+            ['click','dblclick','pointerdown','pointerup'].forEach(evt => {
+                video.addEventListener(evt, (e) => e.stopPropagation());
+            });
+        }
+
         card.addEventListener('click', function() {
+            const nowFlipped = !this.classList.contains('flipped');
             this.classList.toggle('flipped');
+
+            // Handle video playback when flipping
+            const video = this.querySelector('video[data-wish-video]');
+            if (video) {
+                if (nowFlipped) {
+                    // About to show back side
+                    if (video.paused) {
+                        // Attempt play; ignore promise rejections silently
+                        const playPromise = video.play();
+                        if (playPromise && typeof playPromise.catch === 'function') {
+                            playPromise.catch(() => {});
+                        }
+                    }
+                } else {
+                    // Flipping back to front
+                    try {
+                        video.pause();
+                        video.currentTime = 0;
+                    } catch (_) {}
+                }
+            }
         });
     });
+
+    // External flip-back button
+    const flipBackBtn = document.getElementById('flipBackBtn');
+    if (flipBackBtn) {
+        flipBackBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const wishCard = document.getElementById('wishCard');
+            if (!wishCard) return;
+            const video = wishCard.querySelector('video[data-wish-video]');
+            wishCard.classList.remove('flipped');
+            if (video) {
+                try {
+                    video.pause();
+                    video.currentTime = 0;
+                } catch (_) {}
+            }
+        });
+    }
     
     // Flip card functionality for photo/memory cards
     const photoFlipCards = document.querySelectorAll('.photo-card-flip');
@@ -498,7 +554,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Secret Section Password Protection
 function initSecretSection() {
-    const SECRET_PASSWORD = "123";
+    const SECRET_PASSWORD = "chillox";
     const lockScreen = document.getElementById('secretLock');
     const secretContent = document.getElementById('secretContent');
     const passwordInput = document.getElementById('secretPassword');

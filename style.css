@@ -287,6 +287,7 @@ body.loading {
         );
     /* Slight variation in width for realism */
     animation: candleSway 4s ease-in-out infinite;
+    z-index: -1 !important; /* keep stick behind the cake */
 }
 
 @keyframes candleSway {
@@ -374,68 +375,6 @@ body.loading {
     }
 }
 
-/* Add wax drip effect */
-.velas-container::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 3px;
-    height: 4px;
-    background: linear-gradient(to bottom, 
-        rgba(255, 255, 255, 0.9) 0%, 
-        rgba(255, 250, 240, 0.8) 50%, 
-        rgba(255, 245, 230, 0.6) 100%);
-    border-radius: 0 0 2px 2px;
-    opacity: 0;
-    animation: waxDrip 8s 7s infinite;
-}
-
-@keyframes waxDrip {
-    0%, 90% {
-        opacity: 0;
-        height: 4px;
-    }
-    5%, 85% {
-        opacity: 0.6;
-        height: 5px;
-    }
-    10%, 80% {
-        opacity: 0.4;
-        height: 6px;
-    }
-}
-
-/* Add glow effect around candle base */
-.velas-container::before {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 12px;
-    height: 8px;
-    background: radial-gradient(ellipse, 
-        rgba(255, 235, 59, 0.3) 0%, 
-        rgba(255, 152, 0, 0.2) 40%, 
-        transparent 70%);
-    border-radius: 50%;
-    opacity: 0;
-    animation: baseGlow 2s 6.8s infinite;
-    z-index: -1;
-}
-
-@keyframes baseGlow {
-    0%, 100% {
-        opacity: 0.4;
-        transform: translateX(-50%) scale(1);
-    }
-    50% {
-        opacity: 0.6;
-        transform: translateX(-50%) scale(1.2);
-    }
-}
 
 .hero-content {
     text-align: center;
@@ -516,7 +455,9 @@ body.loading {
 /* Photo Flip Card Container */
 .photo-card-flip {
     perspective: 1000px;
-    height: 400px;
+    aspect-ratio: 9 / 16;
+    width: min(100%, 360px);
+    height: auto;
     cursor: pointer;
     opacity: 1 !important;
     visibility: visible !important;
@@ -572,6 +513,8 @@ body.loading {
     opacity: 1 !important;
     visibility: visible !important;
     z-index: 1;
+    padding: 0; /* allow media to fill edge-to-edge */
+    overflow: hidden;
 }
 
 .photo-card-flip:hover .photo-card-front {
@@ -590,6 +533,10 @@ body.loading {
     border-radius: 10px;
     border: 2px dashed rgba(255, 182, 193, 0.3);
 }
+/* Hide dashed placeholder when real image is present */
+.photo-card-back .photo-image-placeholder {
+    display: none !important;
+}
 
 .photo-image-placeholder .image-icon {
     font-size: 4rem;
@@ -607,7 +554,9 @@ body.loading {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 10px;
+    border-radius: inherit;
+    object-position: center;
+    display: block;
 }
 
 .photo-card-front::before {
@@ -693,16 +642,20 @@ body.loading {
 }
 
 .wishes-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
+    /* Use flex so the card and button stack and center */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
     margin-top: 3rem;
 }
 
 /* Flip Card Container */
 .wish-card-flip {
     perspective: 1000px;
-    height: 300px;
+    aspect-ratio: 9 / 16;
+    width: min(100%, 360px);
+    height: auto;
     cursor: pointer;
     opacity: 1 !important;
     visibility: visible !important;
@@ -752,6 +705,8 @@ body.loading {
     transform: rotateY(180deg);
     opacity: 1 !important;
     visibility: visible !important;
+    padding: 0; /* media fills fully */
+    overflow: hidden;
 }
 
 .wish-card-flip:hover .wish-card-front {
@@ -801,6 +756,83 @@ body.loading {
     height: 100%;
     object-fit: cover;
     border-radius: 10px;
+}
+
+/* Video on wish card back */
+.wish-card-back video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* ensure full video visible within 9:16 card */
+    border-radius: 10px;
+    background: #000;
+    display: block;
+}
+
+.wish-video-container {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.wish-actions {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.flip-back-btn {
+    margin-top: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 182, 193, 0.4);
+    background: rgba(26, 26, 46, 0.8);
+    color: #ffd6e3;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+}
+
+.flip-back-btn:hover {
+    transform: translateY(-1px);
+    border-color: rgba(255, 182, 193, 0.7);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.35), 0 0 20px rgba(255, 182, 193, 0.25);
+}
+
+/* Make the 3rd memory image show fully without crop */
+.photo-grid .photo-card-flip:nth-child(3) .photo-card-back {
+    padding: 0;
+}
+.photo-grid .photo-card-flip:nth-child(3) .photo-card-back img {
+    object-fit: contain;
+    background: #000;
+}
+
+/* Secret section responsive tweaks */
+@media (max-width: 600px) {
+    .secret-container {
+        width: 100%;
+        padding: 1rem;
+        margin: 0 1rem;
+    }
+    .password-input-container {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        width: 100%;
+    }
+    .password-input,
+    .password-submit-btn {
+        width: 100%;
+    }
+}
+
+/* Card responsiveness */
+@media (max-width: 420px) {
+    .photo-card-flip,
+    .wish-card-flip {
+        width: min(100%, 300px);
+    }
 }
 
 .wish-icon {

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Animation Test</title>
+    <style>
+        body {
+            background: #1a1a2e;
+            margin: 0;
+            padding: 20px;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        .test-box {
+            background: #ffb6c1;
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            animation: testMove 2s linear infinite;
+        }
+        @keyframes testMove {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(300px); }
+        }
+    </style>
+</head>
+<body>
+    <h1>Animation Test Page</h1>
+    <p>If you see a pink box moving, animations work!</p>
+    <div class="test-box"></div>
+    <script>
+        console.log('Test page loaded');
+    </script>
+</body>
+</html>
+
